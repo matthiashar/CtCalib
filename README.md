@@ -7,8 +7,10 @@ Project for the calibration of cone beam computed tomography systems using proje
 The misalignment of cone beam computed tomography systems can be modeled by several different approaches. In this project, three different models are implemented. Two of which are described in the corresponding publication (see How to cite). The third model is the one used in the  [Reconstruction Toolkit (RTK)](https://www.openrtk.org/) and described in [RTK 3D circular projection geometry](http://www.openrtk.org/Doxygen/DocGeo3D.html). The geometry models describe the relationship between the 3D points on the rotation axis and their projection onto the detector frame. The parameters of these models are adjusted using the projections of a calibration phantom with steel ball bearings.
 
 This project contanins:
+
 - Methods for the detection of ellipses
 - todo
+
 This project cannot be used for:
 - Reconstruction of the 3D geometry
 
@@ -23,7 +25,7 @@ This project cannot be used for:
 
 ## Usage
 ### Run with own data
-  TODO
+  	TODO
 ### Adding other geometry models
 	TODO
 
