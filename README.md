@@ -12,8 +12,8 @@ The misalignment of cone beam computed tomography systems can be modeled by seve
 - The structure to create new geometry models.
 
 **This is not for:**
-- The Reconstruction of the 3D geometry from projectios.
-- Using the determined parameters to correct projections.
+- The Reconstruction of the 3D geometry from projections.
+- Using the determined parameters to correct projection images.
 
 ## Installation
 ### Dependencies
