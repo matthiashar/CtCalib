@@ -161,6 +161,7 @@ bool Calibration::runCalibration(ProjectionData& projection_data,
 		}
 	}
 	mean_eccentricity = mean_eccentricity / double(n_eccentricity);
+	result.mean_eccentricity_px = mean_eccentricity / model.getPixelSize();
 
 	// Compute covariance matrix
 	if (calculate_covariance) {
@@ -244,7 +245,7 @@ bool Calibration::runCalibration(ProjectionData& projection_data,
 		report << "\nRMSE_x " << result.rmseX;
 		report << "\nRMSE_y " << result.rmseY;
 		report << "\nRMSE_d " << result.rmse;
-		report << "\nEccentricity_mean " << mean_eccentricity / model.getPixelSize();
+		report << "\nEccentricity_mean " << result.mean_eccentricity_px;
 		report << "\nnumber_image_points " << result.ceres_summary.num_residual_blocks_reduced;
 		report << "\nnumber_object_points " << object_points.size();
 		report << "\n-- Standard deviation parameter--\n";

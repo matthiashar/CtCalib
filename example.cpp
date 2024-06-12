@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
 	// Calbration
 	CalibrationProcess c_process;
 	if (new_detection) {
-		c_process.searchForAditionalObservationsInImage = true;
+		c_process.searchForAdditionalObservationsInImage = true;
 	}		
 	c_process.runCalibration(pdata, *model, (path.parent_path() / "out/").string());
 

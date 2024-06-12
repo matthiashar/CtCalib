@@ -6,7 +6,7 @@
 class Calibration
 {
 public:
-	// Options
+	/// Options for bundel adjustment.
 	struct Options
 	{
 		Options() {
@@ -22,7 +22,7 @@ public:
 		double huber_loss_a;
 	};
 
-	// Result
+	/// Struct to save results after bundle adjustment.
 	struct Result
 	{
 		ceres::Solver::Summary ceres_summary;
@@ -30,7 +30,7 @@ public:
 		std::map<GeometryParameter*, double> sd_parameter;
 		std::map<int, std::vector<double>> sd_object_points;
 		std::map<int, double> rmse_object_points;
-		double s0, rmseX, rmseY, rmse;
+		double s0, rmseX, rmseY, rmse, mean_eccentricity_px;
 
 		std::string toString() {
 			std::stringstream s;
@@ -43,9 +43,24 @@ public:
 				<< "Termination: " << ceres_summary.termination_type << std::endl;
 			return s.str();
 		}
+
+		std::string finalStatsToString() {
+			std::stringstream s;
+			s << "\n-- Final Stats --";
+			s << "\nRMSE_x " << rmseX;
+			s << "\nRMSE_y " << rmseY;
+			s << "\nRMSE_d " << rmse;
+			s << "\nEccentricity_mean " << mean_eccentricity_px;
+			s << "\nnumber_image_points " << ceres_summary.num_residual_blocks_reduced;
+			s << "\nnumber_object_points " << sd_object_points.size();
+			s << "\n-- Standard deviation parameter--\n";
+			for (auto const& pm : sd_parameter)
+				s << pm.first->m_name << " " << pm.first->m_value << " " << pm.second << std::endl;
+			return s.str();
+		}
 	};
 
-	// Struct for calibration of multiple data sets together
+	/// Struct for calibration of multiple data sets together
 	struct InData
 	{
 		InData(std::string _name) : name(_name) {}
@@ -57,13 +72,13 @@ public:
 
 	Calibration(Options options = Options());
 
-	// function to run adjustment of parameters for one data set
+	/// Function to run adjustment of parameters for one data set
 	bool runCalibration(ProjectionData& projection_data,
 		GeometryModel& model,
 		std::map<int, std::vector<double>>& object_points,
 		bool calculate_covariance = false);
 
-	// function to run adjustment of parameters for multiple data sets
+	/// Function to run adjustment of parameters for multiple data sets
 	bool runCalibration(std::vector<InData>& data,
 		std::map<int, std::vector<double>>& object_points,
 		bool calculate_covariance = false);

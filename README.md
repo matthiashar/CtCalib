@@ -1,7 +1,7 @@
 # CtCalib
 Project for the calibration of cone beam computed tomography systems using projections of a calibration phantom with unknown coordinates.
 
-**Limitations:** Note that the project was developed as part of a research project and may contain bugs. Please use code with caution. 
+**Limitations:** Note that the project was developed as part of a research project between July 2023 and June 2024. It will most likely not receive any updates and may contain bugs. Please use the code with caution.
 
 ## Introduction
 The misalignment of cone beam computed tomography systems can be modeled by several different approaches. In this project, three different models are implemented. Two of which are described in the corresponding publication (see How to cite). The third model is the one used in the  [Reconstruction Toolkit (RTK)](https://www.openrtk.org/) and described in [RTK 3D circular projection geometry](http://www.openrtk.org/Doxygen/DocGeo3D.html). The geometry models describe the relationship between the 3D points on the rotation axis and their projection onto the detector frame. The parameters of these models are adjusted using the projections of a calibration phantom with steel ball bearings.
@@ -149,4 +149,4 @@ ceres::ResidualBlockId GeometryDetector::addResidualBlock(
 
 
 ## How to cite
-	TODO
+	Will be added later.

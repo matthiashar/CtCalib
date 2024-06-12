@@ -7,15 +7,15 @@
 namespace fs = std::filesystem;
 
 CalibrationProcess::CalibrationProcess() :
-	searchForAditionalObservationsInImage(true),
+	searchForAdditionalObservationsInImage(true),
 	residualsWithBackground(true),
 	saveResiduals(false),
-	removeOutlier(true),
+	removeOutliers(true),
 	correctEccentricity(true),
-	number_iteratations(3),
+	number_iterations(3),
 	object_point_merge_threshold(1.0),
 	outlier_iqr_multiplier(2.0),
-	oberservation_search_threshold(1.0)
+	observation_search_threshold(1.0)
 {
 
 	// Enable this in case of rank deficientcy. Nessesary for calculating the covarianz matrix.
@@ -67,14 +67,14 @@ void CalibrationProcess::runCalibration(ProjectionData& pdata, GeometryModel& m,
 	calib.runCalibration(pdata, m, object_points);
 	std::cout << "Iteration 0 - RMSE: " << calib.getResult().rmse << std::endl;
 
-	for (auto iteration = 1; iteration < number_iteratations; iteration++) {
+	for (auto iteration = 1; iteration < number_iterations; iteration++) {
 		// Merge overlapping object points
 		std::vector<std::pair<int, int>> merged_points = ProjectionProcessing::mergeOverlappingObjectPoints(pdata, m, object_points, object_point_merge_threshold);
 
 		// Search for missing points
 		marker_detection::Parameter copy_parameter;
 		copy_parameter.sub_pixel_method = 1;
-		int found_observations = ProjectionProcessing::searchMissingObservations(pdata, m, object_points, oberservation_search_threshold, searchForAditionalObservationsInImage, copy_parameter);
+		int found_observations = ProjectionProcessing::searchMissingObservations(pdata, m, object_points, observation_search_threshold, searchForAdditionalObservationsInImage, copy_parameter);
 
 		// Correct projection centers of sphere
 		if (correctEccentricity) {
@@ -83,7 +83,7 @@ void CalibrationProcess::runCalibration(ProjectionData& pdata, GeometryModel& m,
 
 		// Remove outliers
 		int detected_outlier = 0;
-		if (removeOutlier) {
+		if (remove) {
 			detected_outlier = ProjectionProcessing::detectOutlier(pdata, outlier_iqr_multiplier);
 		}
 
@@ -109,6 +109,10 @@ void CalibrationProcess::runCalibration(ProjectionData& pdata, GeometryModel& m,
 	// Save report
 	std::ofstream report_out(out_path + "report.txt");
 	report_out << calib.getReport();
+
+	// Save final stats
+	std::ofstream stats_out(out_path + "final_stats.txt");
+	stats_out << calib.getResult().finalStatsToString();
 
 	// Save calibration data
 	pdata.write(out_path + "adjusted_calibration.xml");
