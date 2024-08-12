@@ -4,7 +4,7 @@ Project for the calibration of cone beam computed tomography systems using proje
 **Limitations:** Note that the project was developed as part of a research project between July 2023 and June 2024. It will most likely not receive any updates and may contain bugs. Please use the code with caution.
 
 ## Introduction
-The misalignment of cone beam computed tomography systems can be modeled by several different approaches. In this project, three different models are implemented. Two of which are described in the corresponding publication (see How to cite). The third model is the one used in the  [Reconstruction Toolkit (RTK)](https://www.openrtk.org/) and described in [RTK 3D circular projection geometry](http://www.openrtk.org/Doxygen/DocGeo3D.html). The geometry models describe the relationship between the 3D points on the rotation axis and their projection onto the detector frame. The parameters of these models are adjusted using the projections of a calibration phantom with steel ball bearings.
+The misalignment of cone beam computed tomography systems can be modeled by several different approaches. In this project, three different models are implemented. Two of which are described in the [corresponding publication](https://doi.org/10.3390/s24165139) (see also How to cite). The third model is the one used in the  [Reconstruction Toolkit (RTK)](https://www.openrtk.org/) and described in [RTK 3D circular projection geometry](http://www.openrtk.org/Doxygen/DocGeo3D.html). The geometry models describe the relationship between the 3D points on the rotation axis and their projection onto the detector frame. The parameters of these models are adjusted using the projections of a calibration phantom with steel ball bearings.
 
 **This project contains:**
 - Methods for the detection of ellipses in projection images.
@@ -37,9 +37,9 @@ where:
 - `<pixel size>` - Size of one pixel in mm
 - `<maximum rotation angle>` - Gantry angle of last projection in rad to calculate the angle difference between two projections.
 Depending on the direction of rotation this value can be negative or positive.  Examples:
-	- For a full 360° degree **clockwise** rotation: `6.28`
-	- For a full 360° degree **counter clockwise** rotation: `-6.28`
-	- For a 180° degree **clockwise** rotation: `3.14`
+	- For a full 360Â° degree **clockwise** rotation: `6.28`
+	- For a full 360Â° degree **counter clockwise** rotation: `-6.28`
+	- For a 180Â° degree **clockwise** rotation: `3.14`
 
 ### Adding other geometry models
 For a quick start with the Ceres Solver library check first: [introduction](http://ceres-solver.org/nnls_tutorial.html#introduction). 
@@ -149,4 +149,18 @@ ceres::ResidualBlockId GeometryDetector::addResidualBlock(
 
 
 ## How to cite
-	Will be added later.
+The corresponding publication can be found [here](https://doi.org/10.3390/s24165139).
+```
+@Article{s24165139,
+AUTHOR = {Hardner, Matthias and Liebold, Frank and Wagner, Franz and Maas, Hans-Gerd},
+TITLE = {Investigations into the Geometric Calibration and Systematic Effects of a Micro-CT System},
+JOURNAL = {Sensors},
+VOLUME = {24},
+YEAR = {2024},
+NUMBER = {16},
+ARTICLE-NUMBER = {5139},
+URL = {https://www.mdpi.com/1424-8220/24/16/5139},
+ISSN = {1424-8220},
+DOI = {10.3390/s24165139}
+}
+```
