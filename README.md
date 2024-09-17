@@ -41,6 +41,34 @@ Depending on the direction of rotation this value can be negative or positive.  
 	- For a full 360° degree **counter clockwise** rotation: `-6.28`
 	- For a 180° degree **clockwise** rotation: `3.14`
 
+## Example data
+One of the data sets (SRD170) can be found [here](https://doi.org/10.25532/OPARA-609). The zip file contains the files from the output directory of the µCT system. The RAW projections can be converted to TIFF using an ImageJ macro:
+```
+extension = ".raw";
+dir1 = getDirectory("Choose Source Directory ");
+dir2 = getDirectory("Choose Destination Directory ");
+setBatchMode(true);
+n = 0;
+processFolder(dir1);
+
+function processFolder(dir1) {
+ list = getFileList(dir1);
+ for (i=0; i<list.length; i++) {
+	  if (endsWith(list[i], "/"))
+		  processFolder(dir1+list[i]);
+	  else if (endsWith(list[i], extension))
+		 processImage(dir1, list[i]);
+  }
+}
+
+function processImage(dir1, name) {
+ run("Raw...", "open=" + dir1+name + " image=[16-bit Unsigned] width=2940 height=2301 offset=2048 gap=1 little-endian");
+// save image
+ saveAs(".tiff", dir2+name);
+ close("*");
+}
+```
+
 ### Adding other geometry models
 For a quick start with the Ceres Solver library check first: [introduction](http://ceres-solver.org/nnls_tutorial.html#introduction). 
 The class for a new CT geometry model should inherit from the base class `GeometryModel`.  See `GeometryDetector.h` and `GeometryDetector.cpp` for a full example.
